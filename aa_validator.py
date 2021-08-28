@@ -7,7 +7,8 @@ import enum
 import functools
 import json
 import logging
-from typing import Generator, List, Iterable, Literal, Union
+from typing import Generator, List, Iterable, Union
+from typing_extensions import Literal
 
 import boto3
 import botocore.exceptions

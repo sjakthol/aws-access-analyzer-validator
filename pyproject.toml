@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "aws-access-analyzer-validator"
-version = "0.1.0"
+version = "0.1.1"
 description = "A tool to validate existing identity and resource policies across regions and supported AWS services with AWS IAM Access Analyzer."
 authors = ["Sami Jaktholm <sjakthol@outlook.com>"]
 license = "MIT"
 packages = [
+  {include = "aa_validator.py"},
   {include = "py.typed"}
 ]
 readme = 'README.md'

@@ -1,0 +1,456 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Resources for testing policy validation
+
+Resources:
+  Group1:
+    Type: AWS::IAM::Group
+
+  Group2:
+    Type: AWS::IAM::Group
+    Properties:
+      Policies:
+        - PolicyName: ValidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+        - PolicyName: ValidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+  Group3:
+    Type: AWS::IAM::Group
+    Properties:
+      Policies:
+        - PolicyName: InvalidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+        - PolicyName: InvalidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                    "Condition":
+                      { "IpAddress": { "aws:VpcSourceIp": "172.0.0.1/30" } },
+                  },
+                ],
+            }
+
+  User1:
+    Type: AWS::IAM::User
+
+  User2:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: ValidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+        - PolicyName: ValidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+  User3:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: InvalidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+        - PolicyName: InvalidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                    "Condition":
+                      { "IpAddress": { "aws:VpcSourceIp": "172.0.0.1/30" } },
+                  },
+                ],
+            }
+
+  ManagedPolicy1:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        {
+          "Version": "2012-10-17",
+          "Statement":
+            [
+              {
+                "Effect": "Allow",
+                "Action": ["ec2:DescribeInstances"],
+                "Resource": "*",
+              },
+            ],
+        }
+
+  ManagedPolicy2:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        {
+          "Version": "2012-10-17",
+          "Statement":
+            [
+              {
+                "Effect": "Allow",
+                "Action": ["ec2:NotAnAction"],
+                "Resource": "*",
+              },
+            ],
+        }
+
+  ManagedPolicy3:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        {
+          "Version": "2012-10-17",
+          "Statement":
+            [
+              {
+                "Effect": "Allow",
+                "Action": ["ec2:NotAnAction"],
+                "Resource": "*",
+              },
+              {
+                "Effect": "Allow",
+                "Action": ["ec2:DescribeInstances"],
+                "Resource": "*",
+                "Condition":
+                  { "IpAddress": { "aws:VpcSourceIp": "172.0.0.1/30" } },
+              },
+            ],
+        }
+
+  Role1:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action: sts:AssumeRole
+
+  Role2:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: ValidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+        - PolicyName: ValidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+  Role3:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Ref AWS::AccountId
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: InvalidInlinePolicy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                ],
+            }
+
+        - PolicyName: InvalidInlinePolicy2
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement":
+                [
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:NotAnAction"],
+                    "Resource": "*",
+                  },
+                  {
+                    "Effect": "Allow",
+                    "Action": ["ec2:DescribeInstances"],
+                    "Resource": "*",
+                    "Condition":
+                      { "IpAddress": { "aws:VpcSourceIp": "172.0.0.1/30" } },
+                  },
+                ],
+            }
+
+  Role4:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: ""
+            Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action: sts:AssumeRole
+
+  Bucket1:
+    Type: AWS::S3::Bucket
+
+  Bucket2:
+    Type: AWS::S3::Bucket
+
+  Bucket2Policy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket2
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action:
+              - s3:ListBucket
+              - s3:GetObject
+            Resource:
+              - !Sub ${Bucket2.Arn}
+              - !Sub ${Bucket2.Arn}/*
+          - Effect: Deny
+            Principal: "*"
+            Action:
+              - s3:PutObject
+            Resource:
+              - !Sub ${Bucket2.Arn}/*
+
+  Bucket3:
+    Type: AWS::S3::Bucket
+
+  Bucket3Policy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Bucket3
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action:
+              - s3:ListBucket
+              - s3:GetObject
+            Resource:
+              - !Sub ${Bucket3.Arn}
+              - !Sub ${Bucket3.Arn}/*
+            Condition:
+              IpAddress:
+                aws:VpcSourceIp: 172.0.0.1/30
+          - Effect: Deny
+            Principal: "*"
+            Action:
+              - s3:PutObject
+            Resource:
+              - !Sub ${Bucket3.Arn}/*
+
+  Queue1:
+    Type: AWS::SQS::Queue
+
+  Queue2:
+    Type: AWS::SQS::Queue
+
+  Queue2Policy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues:
+        - !Ref Queue2
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action:
+              - sqs:ReceiveMessage
+            Resource:
+              - !Sub ${Queue2.Arn}
+
+  Queue3:
+    Type: AWS::SQS::Queue
+
+  Queue3Policy:
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      Queues:
+        - !Ref Queue3
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - sqs:SendMessage
+            Resource:
+              - !Sub ${Queue3.Arn}
+            Condition:
+              StringEquals:
+                aws:SourceArn: !GetAtt Bucket1.Arn
+
+  Topic1:
+    Type: AWS::SNS::Topic
+
+  Topic2:
+    Type: AWS::SNS::Topic
+
+  Topic2Policy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref Topic2
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Ref AWS::AccountId
+            Action:
+              - sns:Subscribe
+            Resource:
+              - !Sub ${Topic2}
+
+  Topic3:
+    Type: AWS::SNS::Topic
+
+  Topic3Policy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref Topic3
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - sns:Publish
+            Resource:
+              - !Sub ${Topic3}
+            Condition:
+              StringEquals:
+                aws:SourceArn: !GetAtt Bucket1.Arn

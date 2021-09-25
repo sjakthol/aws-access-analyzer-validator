@@ -414,10 +414,10 @@ def generate_report(resources: Iterable[Resource]):
 
     write_output = functools.partial(print, file=args().output)
 
-    write_output(
-        "# IAM Access Analyzer Policy Analysis Report (%s UTC)"
-        % datetime.datetime.utcnow().isoformat(timespec="seconds").replace("T", " "),
+    timestamp = (
+        datetime.datetime.utcnow().isoformat(timespec="seconds").replace("T", " ")
     )
+    write_output(f"# IAM Access Analyzer Policy Analysis Report ({timestamp} UTC)")
     write_output()
     write_output("## Summary")
     write_output("")

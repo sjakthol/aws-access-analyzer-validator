@@ -28,7 +28,7 @@ tox = "^3.24.4"
 bandit = "^1.7.1"
 safety = "^1.10.3"
 pytest-cov = "^3.0.0"
-boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.5"}
+boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.9"}
 typing-extensions = ">=3.10,<5.0"
 
 [build-system]

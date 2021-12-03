@@ -7,7 +7,7 @@ import enum
 import functools
 import json
 import logging
-from typing import Generator, List, Iterable, Union
+from typing import Generator, List, Iterable, Optional, Union
 from typing_extensions import Literal
 
 import boto3
@@ -76,6 +76,11 @@ class Policy:
         return len(self.findings)
 
 
+# Resource types that validate_policy() supports in validatePolicyResourceType
+# parameter
+VALID_VALIDATE_POLICY_RESOURCE_TYPES = {ResourceType.S3_BUCKET}
+
+
 @dataclasses.dataclass
 class Resource:
     """AWS resource."""
@@ -92,6 +97,14 @@ class Resource:
     def num_findings(self) -> int:
         """Number of findings in policies of this resource"""
         return sum(p.num_findings for p in self.policies)
+
+    @property
+    def validate_policy_resource_type(self) -> Optional[str]:
+        """Resource type to use for resource policy validation."""
+        if self.resource_type in VALID_VALIDATE_POLICY_RESOURCE_TYPES:
+            return self.resource_type.value
+
+        return None
 
 
 def _parse_doc(doc: Union[str, dict]) -> dict:
@@ -361,25 +374,29 @@ def validate_resources(resources: Iterable[Resource]):
             resource.resource_arn,
         )
 
-        validate_policies(resource.policies)
+        validate_policies(resource)
 
 
-def validate_policies(policies: Iterable[Policy]):
+def validate_policies(resource: Resource):
     """Validate given policies with Access Analyzer"""
     client = boto3.client("accessanalyzer")
 
-    for policy in policies:
+    for policy in resource.policies:
         logger().info(
             "Validating policy %s (%s)",
             policy.policy_name,
             policy.policy_type.value,
         )
 
-        paginator = client.get_paginator("validate_policy")
-        for page in paginator.paginate(
-            policyType=policy.policy_type.value,
-            policyDocument=policy.doc,
-        ):
+        kwargs = pydash.omit_by(
+            dict(
+                policyType=policy.policy_type.value,
+                policyDocument=policy.doc,
+                validatePolicyResourceType=resource.validate_policy_resource_type,
+            ),
+            lambda v: v is None,
+        )
+        for page in client.get_paginator("validate_policy").paginate(**kwargs):
             for finding in page["findings"]:
                 policy.add_finding(
                     Finding(

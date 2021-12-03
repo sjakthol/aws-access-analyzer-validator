@@ -104,4 +104,4 @@ def test_integration_regions(monkeypatch, capsys):
 
     # eu-west-1 had some problems but --regions flag should've made
     # validator ignore that region
-    assert "eu-west-1" not in report
+    assert ":eu-west-1:" not in report

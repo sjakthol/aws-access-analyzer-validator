@@ -20,16 +20,13 @@ pydash = "^5.0.2"
 typing-extensions = ">=3.10,<5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-pylint = "^2.12.1"
-black = "^21.11b1"
-mypy = "^0.910"
-tox = "^3.24.4"
 bandit = "^1.7.1"
-safety = "^1.10.3"
-pytest-cov = "^3.0.0"
+black = "^21.11b1"
 boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.17"}
-typing-extensions = ">=3.10,<5.0"
+mypy = "^0.910"
+pylint = "^2.12.1"
+pytest = "^6.2.5"
+pytest-cov = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

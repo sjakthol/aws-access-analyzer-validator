@@ -31,3 +31,22 @@ delete-%:
 # Concrete deploy and delete targets for autocompletion
 $(addprefix deploy-,$(basename $(notdir $(wildcard test/templates/*.yaml)))):
 $(addprefix delete-,$(basename $(notdir $(wildcard test/templates/*.yaml)))):
+
+
+## Build targets
+.PHONY: lint test format lint-pylint lint-black lint-mypy lint-bandit
+test:
+	poetry run pytest -vv --log-level=INFO --cov aa_validator --cov-report term-missing
+
+lint: lint-pylint lint-black lint-mypy lint-bandit
+lint-pylint:
+	poetry run pylint --max-line-length=120 --score=n aa_validator.py
+lint-black:
+	poetry run black --quiet --check aa_validator.py
+lint-mypy:
+	poetry run mypy aa_validator.py
+lint-bandit:
+	poetry run bandit -q -r aa_validator.py
+
+format:
+	poetry run black aa_validator.py

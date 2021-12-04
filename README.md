@@ -94,17 +94,23 @@ Here's an IAM policy that grants the required privileges:
 Requires Python 3 and Poetry. Useful commands:
 
 ```bash
+# Setup environment
+poetry install
+
 # Run integration tests (requires admin-level AWS credentials)
-poetry run tox -e test
+make test
 
 # Run linters
-poetry run tox -e lint
+make -k lint
 
 # Format code
-poetry run tox -e format
+make format
 
 # Deploy test resources (requires AWS CLI and admin level AWS credentials)
 make deploy-test-resources
+
+# Delete test resources
+make delete-test-resources
 ```
 
 ## Credits

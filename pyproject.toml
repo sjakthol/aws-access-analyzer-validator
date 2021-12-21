@@ -22,7 +22,7 @@ typing-extensions = ">=3.10,<5.0"
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.1"
 black = "^21.12b0"
-boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.24"}
+boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.25"}
 mypy = "^0.920"
 pylint = "^2.12.1"
 pytest = "^6.2.5"

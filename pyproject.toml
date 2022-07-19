@@ -5,8 +5,7 @@ description = "A tool to validate existing identity and resource policies across
 authors = ["Sami Jaktholm <sjakthol@outlook.com>"]
 license = "MIT"
 packages = [
-  {include = "aa_validator.py"},
-  {include = "py.typed"}
+  {include = "aa_validator"}
 ]
 readme = 'README.md'
 

@@ -40,13 +40,13 @@ test:
 
 lint: lint-pylint lint-black lint-mypy lint-bandit
 lint-pylint:
-	poetry run pylint --max-line-length=120 --score=n aa_validator.py
+	poetry run pylint --max-line-length=120 --score=n aa_validator
 lint-black:
-	poetry run black --quiet --check aa_validator.py
+	poetry run black --quiet --check aa_validator
 lint-mypy:
-	poetry run mypy aa_validator.py
+	poetry run mypy aa_validator
 lint-bandit:
-	poetry run bandit -q -r aa_validator.py
+	poetry run bandit -q -r aa_validator
 
 format:
-	poetry run black aa_validator.py
+	poetry run black aa_validator

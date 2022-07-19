@@ -11,6 +11,7 @@ from typing import Generator, List, Iterable, Optional, Union
 from typing_extensions import Literal
 
 import boto3
+import boto3.session
 import botocore.exceptions
 import pydash  # type: ignore
 
@@ -156,7 +157,7 @@ def ignore_permission_errors(func):
 @functools.lru_cache()
 def get_regions(service) -> List[str]:
     """Get a list of regions for policy discovery."""
-    session = boto3.Session()
+    session = boto3.session.Session()
     available_regions = session.get_available_regions(service)
     requested_regions: str = args().regions
 

@@ -94,8 +94,8 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "boto3-stubs"
-version = "1.24.36.post1"
-description = "Type annotations for boto3 1.24.36 generated with mypy-boto3-builder 7.10.0"
+version = "1.24.42"
+description = "Type annotations for boto3 1.24.42 generated with mypy-boto3-builder 7.10.2"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
@@ -336,6 +336,7 @@ personalize-events = ["mypy-boto3-personalize-events (>=1.24.0,<1.25.0)"]
 personalize-runtime = ["mypy-boto3-personalize-runtime (>=1.24.0,<1.25.0)"]
 pi = ["mypy-boto3-pi (>=1.24.0,<1.25.0)"]
 pinpoint = ["mypy-boto3-pinpoint (>=1.24.0,<1.25.0)"]
+sso = ["mypy-boto3-sso (>=1.24.0,<1.25.0)"]
 pinpoint-email = ["mypy-boto3-pinpoint-email (>=1.24.0,<1.25.0)"]
 pinpoint-sms-voice = ["mypy-boto3-pinpoint-sms-voice (>=1.24.0,<1.25.0)"]
 pinpoint-sms-voice-v2 = ["mypy-boto3-pinpoint-sms-voice-v2 (>=1.24.0,<1.25.0)"]
@@ -396,7 +397,6 @@ sqs = ["mypy-boto3-sqs (>=1.24.0,<1.25.0)"]
 ssm = ["mypy-boto3-ssm (>=1.24.0,<1.25.0)"]
 ssm-contacts = ["mypy-boto3-ssm-contacts (>=1.24.0,<1.25.0)"]
 ssm-incidents = ["mypy-boto3-ssm-incidents (>=1.24.0,<1.25.0)"]
-sso = ["mypy-boto3-sso (>=1.24.0,<1.25.0)"]
 sso-admin = ["mypy-boto3-sso-admin (>=1.24.0,<1.25.0)"]
 sso-oidc = ["mypy-boto3-sso-oidc (>=1.24.0,<1.25.0)"]
 stepfunctions = ["mypy-boto3-stepfunctions (>=1.24.0,<1.25.0)"]
@@ -957,7 +957,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7.2,<4.0"
-content-hash = "1935ea9675deb1ba7fac23e7c418c87c9a83147d40f475d83c90bed403fe285a"
+content-hash = "cf2b38952b5e223258a825ae93b73ff82a0d8e09c8362575bafc0c545491a782"
 
 [metadata.files]
 astroid = [
@@ -1005,8 +1005,8 @@ boto3 = [
     {file = "boto3-1.24.36.tar.gz", hash = "sha256:b1855ede59e725b968d6336908ffc864b65985ca441d730625b09c43ccd6413b"},
 ]
 boto3-stubs = [
-    {file = "boto3-stubs-1.24.36.post1.tar.gz", hash = "sha256:39acbbc8c87a101bdf46e058fbb012d044b773b43f7ed02cc4c24192a564411e"},
-    {file = "boto3_stubs-1.24.36.post1-py3-none-any.whl", hash = "sha256:ca3b3066773fc727fea0dbec252d098098e45fe0def011b22036ef674344def2"},
+    {file = "boto3-stubs-1.24.42.tar.gz", hash = "sha256:04d9297fbd68dad6c310a5714b871acd372203f9d4c6e28e4ad93ef8fec3261c"},
+    {file = "boto3_stubs-1.24.42-py3-none-any.whl", hash = "sha256:25aee694c5a19e219cb0ec1bf3cdfdc1723aba1c7e99af5156750c874c625d81"},
 ]
 botocore = [
     {file = "botocore-1.27.36-py3-none-any.whl", hash = "sha256:3119ce186053b9bf6bd0bd0ad19a8cedeb626b205ce6ad26ea0894634f702cd5"},

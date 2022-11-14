@@ -299,7 +299,9 @@ def get_s3_resources() -> Generator[Resource, None, None]:
 
 @for_each_region("sqs")
 @ignore_permission_errors
-def get_sqs_resources(region_name: str = None) -> Generator[Resource, None, None]:
+def get_sqs_resources(
+    region_name: Optional[str] = None,
+) -> Generator[Resource, None, None]:
     """Collect SQS queue policies from a given region.
 
     Args:

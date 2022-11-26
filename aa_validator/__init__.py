@@ -19,8 +19,6 @@ import pydash  # type: ignore
 class ResourceType(str, enum.Enum):
     """Resource types."""
 
-    value: str
-
     IAM_GROUP = "AWS::IAM::Group"
     IAM_POLICY = "AWS::IAM::Policy"
     IAM_ROLE = "AWS::IAM::Role"
@@ -32,8 +30,6 @@ class ResourceType(str, enum.Enum):
 
 class PolicyType(str, enum.Enum):
     """Policy types."""
-
-    value: Literal["IDENTITY_POLICY", "RESOURCE_POLICY"]
 
     IDENTITY_POLICY = "IDENTITY_POLICY"
     RESOURCE_POLICY = "RESOURCE_POLICY"

@@ -762,7 +762,7 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pydash"
-version = "5.1.1"
+version = "5.1.2"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "main"
 optional = false
@@ -1248,8 +1248,8 @@ pluggy = [
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
 pydash = [
-    {file = "pydash-5.1.1-py3-none-any.whl", hash = "sha256:1f677bc1b3e3d734fedfeec6ef379b3abca4466dd83ede2bcc2a783c40dc8325"},
-    {file = "pydash-5.1.1.tar.gz", hash = "sha256:6147c295bdba57004e38e57d8522e0b55c30a468ae7770d598de6ccbb064798a"},
+    {file = "pydash-5.1.2-py3-none-any.whl", hash = "sha256:a2e0c0900fc5a3cc16c9556d34d7e8a59caa9adebcf319876c9a3ccc35dc545f"},
+    {file = "pydash-5.1.2.tar.gz", hash = "sha256:0556062f6583c21fa70dd9a2c1a4e63bbe8cd54e14fecdfb579b46c36d93836f"},
 ]
 pylint = [
     {file = "pylint-2.15.6-py3-none-any.whl", hash = "sha256:15060cc22ed6830a4049cf40bc24977744df2e554d38da1b2657591de5bcd052"},

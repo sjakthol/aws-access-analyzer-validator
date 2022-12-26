@@ -73,14 +73,14 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.26.32"
+version = "1.26.37"
 description = "The AWS SDK for Python"
 category = "main"
 optional = false
 python-versions = ">= 3.7"
 
 [package.dependencies]
-botocore = ">=1.29.32,<1.30.0"
+botocore = ">=1.29.37,<1.30.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.6.0,<0.7.0"
 
@@ -447,7 +447,7 @@ xray = ["mypy-boto3-xray (>=1.26.0,<1.27.0)"]
 
 [[package]]
 name = "botocore"
-version = "1.29.32"
+version = "1.29.37"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -505,17 +505,6 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 
 [package.extras]
 toml = ["tomli"]
-
-[[package]]
-name = "dill"
-version = "0.3.5.1"
-description = "serialize all of python"
-category = "dev"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
-
-[package.extras]
-graph = ["objgraph (>=1.7.2)"]
 
 [[package]]
 name = "dill"
@@ -1024,16 +1013,16 @@ black = [
     {file = "black-22.12.0.tar.gz", hash = "sha256:229351e5a18ca30f447bf724d007f890f97e13af070bb6ad4c0a441cd7596a2f"},
 ]
 boto3 = [
-    {file = "boto3-1.26.32-py3-none-any.whl", hash = "sha256:672b97a634f3408d455bf94a6dfd59ef0c6150019885bc7107e465f062d58c26"},
-    {file = "boto3-1.26.32.tar.gz", hash = "sha256:e0d6215313b03f09a9a38eccc88c1d3ba9868bcaaeb8b20eeb6d88fc3018b94d"},
+    {file = "boto3-1.26.37-py3-none-any.whl", hash = "sha256:7a6766c7177a9c6f85365e02aabd96ca4d72e08bc5cb127cb51b0a97ac9b9d1b"},
+    {file = "boto3-1.26.37.tar.gz", hash = "sha256:82b790b1dabd0746b028d2013b5d4d636a41f3aaf25520081f4c173cb6eb395d"},
 ]
 boto3-stubs = [
     {file = "boto3-stubs-1.26.32.tar.gz", hash = "sha256:bb411448a0e9b222b9c1858249a1f0e517decd699455dff832ef27abcb5a1d69"},
     {file = "boto3_stubs-1.26.32-py3-none-any.whl", hash = "sha256:dc86bc55478649304b4714cd1e9a203fbda14d31e74c037be852dfc770e7439e"},
 ]
 botocore = [
-    {file = "botocore-1.29.32-py3-none-any.whl", hash = "sha256:b1a65edca151665a6844bf9f317440e31d8d5e4cbce3477f2661462e20c213b1"},
-    {file = "botocore-1.29.32.tar.gz", hash = "sha256:27bc3903f7f8c813efd1605ff13ffdfca2c37dc78cadfa488cfda78fca323deb"},
+    {file = "botocore-1.29.37-py3-none-any.whl", hash = "sha256:18ab8e95345a6d0d2653ce65d261a0aef6fef8a57a35a89e3cea6ffe315e92fc"},
+    {file = "botocore-1.29.37.tar.gz", hash = "sha256:3afa4fec9f7713caa05116563b38f81bec7bd20585d517155484d3f25efab5aa"},
 ]
 botocore-stubs = [
     {file = "botocore-stubs-1.27.32.tar.gz", hash = "sha256:638746f1de11589c48cb3b1e571050f0595a8b7923aa6ed95f62647b5e2fbc96"},
@@ -1100,8 +1089,6 @@ coverage = [
     {file = "coverage-6.4.4.tar.gz", hash = "sha256:e16c45b726acb780e1e6f88b286d3c10b3914ab03438f32117c4aa52d7f30d58"},
 ]
 dill = [
-    {file = "dill-0.3.5.1-py2.py3-none-any.whl", hash = "sha256:33501d03270bbe410c72639b350e941882a8b0fd55357580fbc873fba0c59302"},
-    {file = "dill-0.3.5.1.tar.gz", hash = "sha256:d75e41f3eff1eee599d738e76ba8f4ad98ea229db8b085318aa2b3333a208c86"},
     {file = "dill-0.3.6-py3-none-any.whl", hash = "sha256:a07ffd2351b8c678dfc4a856a3005f8067aea51d6ba6c700796a4d9e280f39f0"},
     {file = "dill-0.3.6.tar.gz", hash = "sha256:e5db55f3687856d8fbdab002ed78544e1c4559a130302693d839dfe8f93f2373"},
 ]

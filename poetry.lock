@@ -89,8 +89,8 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "boto3-stubs"
-version = "1.26.37"
-description = "Type annotations for boto3 1.26.37 generated with mypy-boto3-builder 7.12.2"
+version = "1.26.41"
+description = "Type annotations for boto3 1.26.41 generated with mypy-boto3-builder 7.12.2"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
@@ -141,7 +141,7 @@ backup-gateway = ["mypy-boto3-backup-gateway (>=1.26.0,<1.27.0)"]
 backupstorage = ["mypy-boto3-backupstorage (>=1.26.0,<1.27.0)"]
 batch = ["mypy-boto3-batch (>=1.26.0,<1.27.0)"]
 billingconductor = ["mypy-boto3-billingconductor (>=1.26.0,<1.27.0)"]
-boto3 = ["boto3 (==1.26.37)", "botocore (==1.29.37)"]
+boto3 = ["boto3 (==1.26.41)", "botocore (==1.29.41)"]
 braket = ["mypy-boto3-braket (>=1.26.0,<1.27.0)"]
 budgets = ["mypy-boto3-budgets (>=1.26.0,<1.27.0)"]
 ce = ["mypy-boto3-ce (>=1.26.0,<1.27.0)"]
@@ -985,7 +985,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7.2,<4.0"
-content-hash = "7d7f5770940f74ba0c00d2af46a0b8cf07c8ba29fe12ac7160d9800037aeb137"
+content-hash = "e399839bd412e611878d6dd75bdde8be7e646225637cba3259dd22651698f600"
 
 [metadata.files]
 astroid = [
@@ -1019,8 +1019,8 @@ boto3 = [
     {file = "boto3-1.26.37.tar.gz", hash = "sha256:82b790b1dabd0746b028d2013b5d4d636a41f3aaf25520081f4c173cb6eb395d"},
 ]
 boto3-stubs = [
-    {file = "boto3-stubs-1.26.37.tar.gz", hash = "sha256:f83574c4b835e38ffeeb644c4f04cb8f53b4a2672e62df23a473b29aed557046"},
-    {file = "boto3_stubs-1.26.37-py3-none-any.whl", hash = "sha256:b2a31bfc2088516775687835c6bca236d94790ec859bbf8bcf1a721bc837ce4a"},
+    {file = "boto3-stubs-1.26.41.tar.gz", hash = "sha256:56d7a2d1aaca2cc183b0b4ec12b9a91626fd802c991ea374366809ec36d64c99"},
+    {file = "boto3_stubs-1.26.41-py3-none-any.whl", hash = "sha256:e37b5e498dad6619fcd234ed62fdaaa51bbbad34bfb0ee1969e1e186879f4ba8"},
 ]
 botocore = [
     {file = "botocore-1.29.37-py3-none-any.whl", hash = "sha256:18ab8e95345a6d0d2653ce65d261a0aef6fef8a57a35a89e3cea6ffe315e92fc"},

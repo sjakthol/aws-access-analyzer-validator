@@ -387,11 +387,11 @@ def validate_policies(resource: Resource):
         )
 
         kwargs = pydash.omit_by(
-            dict(
-                policyType=policy.policy_type.value,
-                policyDocument=policy.doc,
-                validatePolicyResourceType=resource.validate_policy_resource_type,
-            ),
+            {
+                "policyType": policy.policy_type.value,
+                "policyDocument": policy.doc,
+                "validatePolicyResourceType": resource.validate_policy_resource_type,
+            },
             lambda v: v is None,
         )
         for page in client.get_paginator("validate_policy").paginate(**kwargs):

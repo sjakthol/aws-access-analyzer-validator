@@ -247,7 +247,6 @@ def get_iam_resources() -> Generator[Resource, None, None]:
 
         # Customer managed IAM policies
         for policy in page["Policies"]:
-
             # Dig out default version
             versions = policy["PolicyVersionList"]
             default = list(filter(lambda p: p["IsDefaultVersion"], versions))[0]

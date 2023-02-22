@@ -454,3 +454,42 @@ Resources:
             Condition:
               StringEquals:
                 aws:SourceArn: !GetAtt Bucket1.Arn
+
+  EcrRepository1:
+    Type: AWS::ECR::Repository
+
+  EcrRepository2:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryPolicyText:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: AllowPushPullValid
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Ref AWS::AccountId
+            Action:
+              - ecr:GetDownloadUrlForLayer
+              - ecr:BatchGetImage
+              - ecr:BatchCheckLayerAvailability
+              - ecr:PutImage
+              - ecr:InitiateLayerUpload
+              - ecr:UploadLayerPart
+              - ecr:CompleteLayerUpload
+
+  EcrRepository3:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryPolicyText:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Sid: AllowPushInvalid
+            Effect: Allow
+            Principal:
+              AWS:
+                - !Ref AWS::AccountId
+            Action:
+              - ecr:PutFakeImage

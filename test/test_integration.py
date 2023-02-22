@@ -77,6 +77,7 @@ def test_integration(monkeypatch, capsys):
     assert "* arn:aws:s3::" in report
     assert "* arn:aws:sns:eu-north-1:" in report
     assert "* arn:aws:sns:eu-west-1:" in report
+    assert "* arn:aws:ecr:eu-north-1:" in report
 
     assert "* ERROR" in report
     assert "* SECURITY_WARNING" in report

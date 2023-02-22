@@ -19,6 +19,7 @@ import pydash  # type: ignore
 class ResourceType(str, enum.Enum):
     """Resource types."""
 
+    ECR_REPOSITORY = "AWS::ECR::Repository"
     IAM_GROUP = "AWS::IAM::Group"
     IAM_POLICY = "AWS::IAM::Policy"
     IAM_ROLE = "AWS::IAM::Role"
@@ -134,6 +135,7 @@ def ignore_permission_errors(func):
                 "AuthorizationError",
                 "InvalidClientTokenId",
                 "NotAuthorized",
+                "UnrecognizedClientException",
             ):
                 reg = _kwargs.get("region_name")
                 region = f" on region {reg}" if reg else ""
@@ -363,6 +365,43 @@ def get_sns_resources(region_name=None) -> Generator[Resource, None, None]:
             )
 
 
+@for_each_region("ecr")
+@ignore_permission_errors
+def get_ecr_resources(region_name=None) -> Generator[Resource, None, None]:
+    """Collect ECR repository policies from a given region.
+
+    Args:
+        region_name: AWS Region to collect repository policies from.
+
+    Yields:
+        Resource objects for each repository with a repository policy.
+    """
+    logger().info("Collecting ECR repository policies from %s.", region_name)
+
+    client = boto3.client("ecr", region_name=region_name)
+    for page in client.get_paginator("describe_repositories").paginate():
+        for repository in page.get("repositories", []):
+            repository_name = repository["repositoryName"]
+            repository_arn = repository["repositoryArn"]
+            logger().info("Processing repository %s", repository_arn)
+
+            try:
+                policy = client.get_repository_policy(
+                    repositoryName=repository_name
+                ).get("policyText")
+            except client.exceptions.RepositoryPolicyNotFoundException:
+                logger().debug(
+                    "Ignoring repository %s without a repository policy", repository_arn
+                )
+                continue
+
+            yield Resource(
+                ResourceType.ECR_REPOSITORY,
+                repository_arn,
+                [Policy(PolicyType.RESOURCE_POLICY, "RepositoryPolicy", policy)],
+            )
+
+
 def validate_resources(resources: Iterable[Resource]):
     """Validate policies of given AWS resources."""
     for resource in resources:
@@ -537,6 +576,7 @@ def main():
             list(get_s3_resources()),
             list(get_sqs_resources()),
             list(get_sns_resources()),
+            list(get_ecr_resources()),
         ]
     )
     logger().info(

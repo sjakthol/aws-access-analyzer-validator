@@ -50,12 +50,15 @@ services:
 * Amazon S3 bucket policies
 * Amazon SQS queue policies
 * Amazon SNS topic policies
+* Amazon Elastic Container Registry (ECR) repository policies
 
 ### Required Permissions
 
 This tool requires the following permissions to operate:
 
 * `accessanalyzer:ValidatePolicy`
+* `ecr:DescribeRepositories`
+* `ecr:GetRepositoryPolicy`
 * `iam:GetAccountAuthorizationDetails`
 * `s3:GetBucketPolicy`
 * `s3:ListAllMyBuckets`
@@ -75,6 +78,8 @@ Here's an IAM policy that grants the required privileges:
             "Effect": "Allow",
             "Action": [
                 "access-analyzer:ValidatePolicy",
+                "ecr:DescribeRepositories",
+                "ecr:GetRepositoryPolicy",
                 "iam:GetAccountAuthorizationDetails",
                 "s3:GetBucketPolicy",
                 "s3:ListAllMyBuckets",

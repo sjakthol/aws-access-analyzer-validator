@@ -1040,14 +1040,14 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pydash"
-version = "6.0.1"
+version = "6.0.2"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pydash-6.0.1-py3-none-any.whl", hash = "sha256:e3c9eedc0f6c480ab6d6accf8c937b01851a2c2501c51676ce75d0635326b0fc"},
-    {file = "pydash-6.0.1.tar.gz", hash = "sha256:5d10b73f80826cfcc5eb8831dbd1af00806ca982fedccca4c271a26a2012c28b"},
+    {file = "pydash-6.0.2-py3-none-any.whl", hash = "sha256:6d3ce5cbbc8ca3533c12782ac201c2ec756d1e1703ec3efc88f2b95d1ed2bb31"},
+    {file = "pydash-6.0.2.tar.gz", hash = "sha256:35caa588e01d293713655e0870544d25128cd414c5e19477a0d63adc2b2ca03e"},
 ]
 
 [package.extras]

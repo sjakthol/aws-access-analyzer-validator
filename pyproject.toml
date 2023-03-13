@@ -23,7 +23,7 @@ bandit = "^1.7.4"
 black = "^23.1"
 boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.26.89"}
 mypy = "^1.0"
-pylint = "^2.16.4"
+pylint = "^2.17.0"
 pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
 

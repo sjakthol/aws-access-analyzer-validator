@@ -7,13 +7,16 @@ import enum
 import functools
 import json
 import logging
-from typing import Generator, List, Iterable, Optional, Union
+from typing import TYPE_CHECKING, Generator, List, Iterable, Optional, Union
 from typing_extensions import Literal
 
 import boto3
 import boto3.session
 import botocore.exceptions
 import pydash  # type: ignore
+
+if TYPE_CHECKING:  # pragma: no cover
+    from mypy_boto3_iam.type_defs import PolicyDocumentFixedTypeDef
 
 
 class ResourceType(str, enum.Enum):
@@ -52,7 +55,7 @@ class Policy:
 
     policy_type: PolicyType
     policy_name: str
-    policy_document: Union[dict, str]
+    policy_document: Union["PolicyDocumentFixedTypeDef", dict, str]
     findings: List[Finding] = dataclasses.field(default_factory=list)
 
     def __post_init__(self):

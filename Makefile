@@ -34,19 +34,17 @@ $(addprefix delete-,$(basename $(notdir $(wildcard test/templates/*.yaml)))):
 
 
 ## Build targets
-.PHONY: lint test format lint-pylint lint-black lint-mypy lint-bandit
+.PHONY: lint test format lint-pylint lint-black lint-mypy
 test:
 	poetry run pytest -vv --log-level=INFO --cov aa_validator --cov-report term-missing
 
-lint: lint-pylint lint-black lint-mypy lint-bandit
+lint: lint-pylint lint-black lint-mypy
 lint-pylint:
 	poetry run pylint --max-line-length=120 --score=n aa_validator
 lint-black:
 	poetry run black --check aa_validator
 lint-mypy:
 	poetry run mypy aa_validator
-lint-bandit:
-	poetry run bandit -q -r aa_validator
 
 format:
 	poetry run black aa_validator

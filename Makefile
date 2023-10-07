@@ -42,7 +42,7 @@ lint: lint-pylint lint-black lint-mypy lint-bandit
 lint-pylint:
 	poetry run pylint --max-line-length=120 --score=n aa_validator
 lint-black:
-	poetry run black --quiet --check aa_validator
+	poetry run black --check aa_validator
 lint-mypy:
 	poetry run mypy aa_validator
 lint-bandit:

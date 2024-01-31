@@ -14,7 +14,7 @@ See [examples/sample_report.md](examples/sample_report.md) for an example.
 
 ## Usage
 
-1. Install from PyPI:
+1. Install from PyPI (Python 3.8+ required):
 
   ```
   pip install aws-access-analyzer-validator
@@ -96,7 +96,7 @@ Here's an IAM policy that grants the required privileges:
 
 ## Development
 
-Requires Python 3 and Poetry. Useful commands:
+Requires Python 3.8+ and Poetry. Useful commands:
 
 ```bash
 # Setup environment

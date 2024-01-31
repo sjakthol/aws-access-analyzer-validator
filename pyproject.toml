@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aws-access-analyzer-validator"
-version = "0.3.1"
+version = "0.4.0"
 description = "A tool to validate existing identity and resource policies across regions and supported AWS services with AWS IAM Access Analyzer."
 authors = ["Sami Jaktholm <sjakthol@outlook.com>"]
 license = "MIT"
@@ -13,19 +13,16 @@ readme = 'README.md'
 aws-access-analyzer-validator = 'aa_validator:main'
 
 [tool.poetry.dependencies]
-python = ">=3.7.2,<4.0"
+python = ">=3.8,<4.0.0"
 boto3 = "^1.20.17"
 pydash = ">=5.0.2,<8.0.0"
 
 [tool.poetry.dev-dependencies]
-black = "^23.3"
-boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.34.4"}
-mypy = "^1.4"
-pylint = [
-  {version = "^2.17.7", python = "<3.8"},
-  {version = "^3.0.1", python = ">=3.8"}
-]
-pytest = "^7.4.4"
+black = "^24.1.1"
+boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], version = "^1.20.17"}
+mypy = "^1.8.0"
+pylint = "^3.0.3"
+pytest = "^8.0.0"
 pytest-cov = "^4.1.0"
 
 [build-system]

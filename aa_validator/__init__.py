@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate AWS identity and resource policies with AWS Access Analyzer"""
+
 import argparse
 import dataclasses
 import datetime
@@ -7,7 +8,7 @@ import enum
 import functools
 import json
 import logging
-from typing import TYPE_CHECKING, Generator, List, Iterable, Optional, Union
+from typing import TYPE_CHECKING, Generator, Iterable, List, Optional, Union
 
 import boto3
 import boto3.session
@@ -190,9 +191,7 @@ def get_iam_resources() -> Generator[Resource, None, None]:
     logger().info("Collecting IAM user, group, role and customer managed policies.")
 
     paginator = boto3.client("iam").get_paginator("get_account_authorization_details")
-    for page in paginator.paginate(
-        Filter=["User", "Role", "Group", "LocalManagedPolicy"]
-    ):
+    for page in paginator.paginate(Filter=["User", "Role", "Group", "LocalManagedPolicy"]):
         # Users and their inline policies
         for user in page["UserDetailList"]:
             yield Resource(
@@ -316,9 +315,7 @@ def get_sqs_resources(
         for queue_url in page.get("QueueUrls", []):
             logger().info("Processing queue %s", queue_url)
 
-            attributes = client.get_queue_attributes(QueueUrl=queue_url).get(
-                "Attributes", {}
-            )
+            attributes = client.get_queue_attributes(QueueUrl=queue_url).get("Attributes", {})
             policy = attributes.get("Policy")
 
             if not policy:
@@ -351,9 +348,7 @@ def get_sns_resources(region_name=None) -> Generator[Resource, None, None]:
             topic_arn = topic["TopicArn"]
             logger().info("Processing topic %s", topic_arn)
 
-            attributes = client.get_topic_attributes(TopicArn=topic_arn).get(
-                "Attributes", {}
-            )
+            attributes = client.get_topic_attributes(TopicArn=topic_arn).get("Attributes", {})
             policy = attributes.get("Policy")
 
             if not policy:
@@ -388,13 +383,9 @@ def get_ecr_resources(region_name=None) -> Generator[Resource, None, None]:
             logger().info("Processing repository %s", repository_arn)
 
             try:
-                policy = client.get_repository_policy(
-                    repositoryName=repository_name
-                ).get("policyText")
+                policy = client.get_repository_policy(repositoryName=repository_name).get("policyText")
             except client.exceptions.RepositoryPolicyNotFoundException:
-                logger().debug(
-                    "Ignoring repository %s without a repository policy", repository_arn
-                )
+                logger().debug("Ignoring repository %s without a repository policy", repository_arn)
                 continue
 
             yield Resource(
@@ -450,14 +441,7 @@ def validate_policies(resource: Resource):
             logger().debug(
                 "%i findings (%s)",
                 policy.num_findings,
-                ", ".join(
-                    [
-                        f"{k}={v}"
-                        for k, v in pydash.count_by(
-                            f.finding_type for f in policy.findings
-                        ).items()
-                    ]
-                ),
+                ", ".join([f"{k}={v}" for k, v in pydash.count_by(f.finding_type for f in policy.findings).items()]),
             )
         else:
             logger().debug("No findings")
@@ -470,9 +454,7 @@ def generate_report(resources: Iterable[Resource]):
 
     write_output = functools.partial(print, file=args().output)
 
-    timestamp = (
-        datetime.datetime.utcnow().isoformat(timespec="seconds").replace("T", " ")
-    )
+    timestamp = datetime.datetime.utcnow().isoformat(timespec="seconds").replace("T", " ")
     write_output(f"# IAM Access Analyzer Policy Analysis Report ({timestamp} UTC)")
     write_output()
     write_output("## Summary")
@@ -497,14 +479,10 @@ def generate_report(resources: Iterable[Resource]):
     write_output()
     write_output("Analyzed Policies")
     resource_policy_types = pydash.flatten(
-        f"{r.resource_type.value}, {p.policy_type.value}"
-        for r in resources
-        for p in r.policies
+        f"{r.resource_type.value}, {p.policy_type.value}" for r in resources for p in r.policies
     )
 
-    for rptype, count in pydash.sort_by(
-        pydash.count_by(resource_policy_types).items(), 1, reverse=True
-    ):
+    for rptype, count in pydash.sort_by(pydash.count_by(resource_policy_types).items(), 1, reverse=True):
         write_output(f"* {rptype}: {count}")
 
     write_output()
@@ -525,9 +503,7 @@ def generate_report(resources: Iterable[Resource]):
 
                 write_output(f"  * {policy.policy_name} ({policy.policy_type.value})")
                 for finding in policy.findings:
-                    write_output(
-                        f"    * {finding.finding_type}: {finding.finding_details}"
-                    )
+                    write_output(f"    * {finding.finding_type}: {finding.finding_details}")
                 write_output()
 
 
@@ -552,9 +528,7 @@ def logger():
 def args() -> argparse.Namespace:
     """Parse arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-v", "--verbose", action="count", default=0, help="Increase log level."
-    )
+    parser.add_argument("-v", "--verbose", action="count", default=0, help="Increase log level.")
     parser.add_argument(
         "-o",
         "--output",

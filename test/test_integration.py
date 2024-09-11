@@ -1,8 +1,8 @@
-from datetime import datetime
 import logging
 import pathlib
 import sys
 import uuid
+from datetime import datetime
 
 import boto3
 import pytest
@@ -14,9 +14,7 @@ WAITER_CONFIG = {"Delay": 5, "MaxAttempts": 60}
 
 @pytest.fixture(scope="session", autouse=True)
 def test_resources():
-    template_body = (
-        pathlib.Path(__file__).parent / "templates" / "test-resources.yaml"
-    ).read_text()
+    template_body = (pathlib.Path(__file__).parent / "templates" / "test-resources.yaml").read_text()
 
     run_id = str(int(datetime.now().timestamp())) + str(uuid.uuid4()).split("-")[0]
     stack_name = f"aws-access-analyzer-validator-integration-test-{run_id}"
@@ -35,17 +33,13 @@ def test_resources():
             TemplateBody=template_body,
             Capabilities=["CAPABILITY_IAM"],
         )
-    except:
+    except Exception:
         pytest.skip("Failed to setup test resources, skipping integration tests.")
         return
 
     logging.info("Waiting for resources to be ready...")
-    client_ew1.get_waiter("stack_create_complete").wait(
-        StackName=stack_name, WaiterConfig=WAITER_CONFIG
-    )
-    client_en1.get_waiter("stack_create_complete").wait(
-        StackName=stack_name, WaiterConfig=WAITER_CONFIG
-    )
+    client_ew1.get_waiter("stack_create_complete").wait(StackName=stack_name, WaiterConfig=WAITER_CONFIG)
+    client_en1.get_waiter("stack_create_complete").wait(StackName=stack_name, WaiterConfig=WAITER_CONFIG)
 
     logging.info("Resources ready. Running tests...")
     yield
@@ -56,12 +50,8 @@ def test_resources():
     client_en1.delete_stack(StackName=stack_name)
 
     logging.info("Waiting for deletion to complete.")
-    client_ew1.get_waiter("stack_delete_complete").wait(
-        StackName=stack_name, WaiterConfig=WAITER_CONFIG
-    )
-    client_en1.get_waiter("stack_delete_complete").wait(
-        StackName=stack_name, WaiterConfig=WAITER_CONFIG
-    )
+    client_ew1.get_waiter("stack_delete_complete").wait(StackName=stack_name, WaiterConfig=WAITER_CONFIG)
+    client_en1.get_waiter("stack_delete_complete").wait(StackName=stack_name, WaiterConfig=WAITER_CONFIG)
 
 
 def test_integration(monkeypatch, capsys):

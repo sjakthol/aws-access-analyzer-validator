@@ -22,7 +22,7 @@ boto3-stubs = {extras = ["accessanalyzer", "iam", "s3", "sqs", "sns", "ec2"], ve
 mypy = "^1.11.2"
 pytest = "^8.3.2"
 pytest-cov = "^5.0.0"
-ruff = ">=0.6.4,<0.9.0"
+ruff = ">=0.6.4,<0.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

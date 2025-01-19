@@ -36,16 +36,16 @@ $(addprefix delete-,$(basename $(notdir $(wildcard test/templates/*.yaml)))):
 ## Build targets
 .PHONY: lint test format lint-ruff-check lint-ruff-format lint-mypy
 test:
-	poetry run pytest -vv --log-level=INFO --cov aa_validator --cov-report term-missing
+	uv run pytest -vv --log-level=INFO --cov aa_validator --cov-report term-missing
 
 lint: lint-ruff-check lint-ruff-format lint-mypy
 lint-ruff-check:
-	poetry run ruff check
+	uv run ruff check
 lint-ruff-format:
-	poetry run ruff format --check
+	uv run ruff format --check
 lint-mypy:
-	poetry run mypy aa_validator
+	uv run mypy aa_validator
 
 format:
-	poetry run ruff format
-	poetry run ruff check --fix
+	uv run ruff format
+	uv run ruff check --fix

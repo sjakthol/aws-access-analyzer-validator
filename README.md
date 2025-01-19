@@ -96,12 +96,9 @@ Here's an IAM policy that grants the required privileges:
 
 ## Development
 
-Requires Python 3.8+ and Poetry. Useful commands:
+Requires Python 3.8+ and uv. Useful commands:
 
 ```bash
-# Setup environment
-poetry install
-
 # Run integration tests (requires admin-level AWS credentials)
 make test
 

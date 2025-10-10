@@ -16,8 +16,8 @@ dependencies = [
 [project.scripts]
 aws-access-analyzer-validator = 'aa_validator:main'
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "boto3-stubs[accessanalyzer,iam,s3,sqs,sns,ec2]",
   "mypy",
   "pytest",
@@ -26,11 +26,12 @@ dev-dependencies = [
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.9.1,<0.10.0"]
+build-backend = "uv_build"
 
-[tool.hatch.build.targets.wheel]
-packages = ["aa_validator"]
+[tool.uv.build-backend]
+module-name = "aa_validator"
+module-root = ""
 
 [tool.ruff]
 line-length = 120

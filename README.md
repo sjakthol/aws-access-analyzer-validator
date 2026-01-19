@@ -14,7 +14,7 @@ See [examples/sample_report.md](examples/sample_report.md) for an example.
 
 ## Usage
 
-1. Install from PyPI (Python 3.8+ required):
+1. Install from PyPI (Python 3.10+ required):
 
   ```
   pip install aws-access-analyzer-validator

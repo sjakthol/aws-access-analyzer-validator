@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Validate AWS identity and resource policies with AWS Access Analyzer"""
 
 import argparse
@@ -8,7 +7,8 @@ import enum
 import functools
 import json
 import logging
-from typing import TYPE_CHECKING, Generator, Iterable, List, Optional, Union
+from collections.abc import Generator, Iterable
+from typing import TYPE_CHECKING, Union
 
 import boto3
 import boto3.session
@@ -56,7 +56,7 @@ class Policy:
     policy_type: PolicyType
     policy_name: str
     policy_document: Union["PolicyDocumentDictTypeDef", dict, str]
-    findings: List[Finding] = dataclasses.field(default_factory=list)
+    findings: list[Finding] = dataclasses.field(default_factory=list)
 
     def __post_init__(self):
         # Ensure policy document is parsed dict, not a string
@@ -88,7 +88,7 @@ class Resource:
 
     resource_type: ResourceType
     resource_arn: str
-    policies: List[Policy] = dataclasses.field(default_factory=list)
+    policies: list[Policy] = dataclasses.field(default_factory=list)
 
     def add_policy(self, policy: Policy):
         """Add a policy to this resource."""
@@ -100,7 +100,7 @@ class Resource:
         return sum(p.num_findings for p in self.policies)
 
     @property
-    def validate_policy_resource_type(self) -> Optional[str]:
+    def validate_policy_resource_type(self) -> str | None:
         """Resource type to use for resource policy validation."""
         if self.resource_type in VALID_VALIDATE_POLICY_RESOURCE_TYPES:
             return self.resource_type.value
@@ -108,7 +108,7 @@ class Resource:
         return None
 
 
-def _parse_doc(doc: Union[str, dict]) -> dict:
+def _parse_doc(doc: str | dict) -> dict:
     """Parse policy document if necessary.
 
     Args:
@@ -155,8 +155,8 @@ def ignore_permission_errors(func):
     return wrapper
 
 
-@functools.lru_cache()
-def get_regions(service) -> List[str]:
+@functools.lru_cache
+def get_regions(service) -> list[str]:
     """Get a list of regions for policy discovery."""
     session = boto3.session.Session()
     available_regions = session.get_available_regions(service)
@@ -252,7 +252,7 @@ def get_iam_resources() -> Generator[Resource, None, None]:
         for policy in page["Policies"]:
             # Dig out default version
             versions = policy["PolicyVersionList"]
-            default = list(filter(lambda p: p["IsDefaultVersion"], versions))[0]
+            default = next(filter(lambda p: p["IsDefaultVersion"], versions))
 
             yield Resource(
                 ResourceType.IAM_POLICY,
@@ -298,7 +298,7 @@ def get_s3_resources() -> Generator[Resource, None, None]:
 @for_each_region("sqs")
 @ignore_permission_errors
 def get_sqs_resources(
-    region_name: Optional[str] = None,
+    region_name: str | None = None,
 ) -> Generator[Resource, None, None]:
     """Collect SQS queue policies from a given region.
 
@@ -454,7 +454,7 @@ def generate_report(resources: Iterable[Resource]):
 
     write_output = functools.partial(print, file=args().output)
 
-    timestamp = datetime.datetime.utcnow().isoformat(timespec="seconds").replace("T", " ")
+    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds").replace("T", " ")
     write_output(f"# IAM Access Analyzer Policy Analysis Report ({timestamp} UTC)")
     write_output()
     write_output("## Summary")
@@ -507,7 +507,7 @@ def generate_report(resources: Iterable[Resource]):
                 write_output()
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def logger():
     """Get module logger."""
     level = logging.DEBUG if args().verbose > 0 else logging.INFO
@@ -524,7 +524,7 @@ def logger():
     return logging.getLogger("validator")
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def args() -> argparse.Namespace:
     """Parse arguments."""
     parser = argparse.ArgumentParser()

@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Union
 
 import boto3
 import boto3.session
+import botocore.config
 import botocore.exceptions
 import pydash  # type: ignore
 
@@ -156,6 +157,11 @@ def ignore_permission_errors(func):
 
 
 @functools.lru_cache
+def get_default_boto3_config() -> botocore.config.Config:
+    return botocore.config.Config(connect_timeout=5, read_timeout=5)
+
+
+@functools.lru_cache
 def get_regions(service) -> list[str]:
     """Get a list of regions for policy discovery."""
     session = boto3.session.Session()
@@ -165,7 +171,8 @@ def get_regions(service) -> list[str]:
     if requested_regions:
         return sorted(set(available_regions) & set(requested_regions.split(",")))
 
-    return sorted(available_regions)
+    excluded_regions = set(args().excluded_regions.split(","))
+    return sorted(set(available_regions) - excluded_regions)
 
 
 def for_each_region(service):
@@ -190,7 +197,9 @@ def get_iam_resources() -> Generator[Resource, None, None]:
     """
     logger().info("Collecting IAM user, group, role and customer managed policies.")
 
-    paginator = boto3.client("iam").get_paginator("get_account_authorization_details")
+    paginator = boto3.client("iam", config=get_default_boto3_config()).get_paginator(
+        "get_account_authorization_details"
+    )
     for page in paginator.paginate(Filter=["User", "Role", "Group", "LocalManagedPolicy"]):
         # Users and their inline policies
         for user in page["UserDetailList"]:
@@ -275,7 +284,7 @@ def get_s3_resources() -> Generator[Resource, None, None]:
     """
     logger().info("Collecting S3 bucket policies...")
 
-    client = boto3.client("s3")
+    client = boto3.client("s3", config=get_default_boto3_config())
     for bucket in client.list_buckets().get("Buckets", []):
         bucket_name = bucket["Name"]
         logger().info("Processing bucket %s", bucket_name)
@@ -310,7 +319,7 @@ def get_sqs_resources(
     """
     logger().info("Collecting SQS queue policies from %s.", region_name)
 
-    client = boto3.client("sqs", region_name=region_name)
+    client = boto3.client("sqs", region_name=region_name, config=get_default_boto3_config())
     for page in client.get_paginator("list_queues").paginate():
         for queue_url in page.get("QueueUrls", []):
             logger().info("Processing queue %s", queue_url)
@@ -342,7 +351,7 @@ def get_sns_resources(region_name=None) -> Generator[Resource, None, None]:
     """
     logger().info("Collecting SNS topic policies from %s.", region_name)
 
-    client = boto3.client("sns", region_name=region_name)
+    client = boto3.client("sns", region_name=region_name, config=get_default_boto3_config())
     for page in client.get_paginator("list_topics").paginate():
         for topic in page.get("Topics", []):
             topic_arn = topic["TopicArn"]
@@ -375,7 +384,7 @@ def get_ecr_resources(region_name=None) -> Generator[Resource, None, None]:
     """
     logger().info("Collecting ECR repository policies from %s.", region_name)
 
-    client = boto3.client("ecr", region_name=region_name)
+    client = boto3.client("ecr", region_name=region_name, config=get_default_boto3_config())
     for page in client.get_paginator("describe_repositories").paginate():
         for repository in page.get("repositories", []):
             repository_name = repository["repositoryName"]
@@ -409,7 +418,7 @@ def validate_resources(resources: Iterable[Resource]):
 
 def validate_policies(resource: Resource):
     """Validate given policies with Access Analyzer"""
-    client = boto3.client("accessanalyzer")
+    client = boto3.client("accessanalyzer", config=get_default_boto3_config())
 
     for policy in resource.policies:
         logger().info(
@@ -544,6 +553,16 @@ def args() -> argparse.Namespace:
             "(example: --regions eu-west-1,eu-north-1). Default: All commercial regions."
         ),
         type=str,
+    )
+    parser.add_argument(
+        "-e",
+        "--excluded-regions",
+        help=(
+            "Comma separated list of regions to excludefrom "
+            "(example: --regions eu-west-1,me-south-1). Default: me-south-1."
+        ),
+        type=str,
+        default="me-south-1",
     )
     return parser.parse_args()
 

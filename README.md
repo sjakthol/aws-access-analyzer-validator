@@ -37,6 +37,11 @@ See [examples/sample_report.md](examples/sample_report.md) for an example.
   validation to policies in `eu-west-1` and `eu-north-1` regions. Global
   resources (IAM, S3) are scanned regardless of region limitations.
 
+* `--excluded-regions` - A comma separated list of regions to exclude from policy
+  validation. For example, `--regions eu-west-1,eu-north-1` excludes
+  resources in `eu-west-1` and `eu-north-1` regions from policy validation.
+  Default: `me-south-1` to skil a defunct region by default.
+
 ### Supported Services / Resources
 
 `aws-access-analyzer-validator` validates policies from the following
@@ -96,7 +101,7 @@ Here's an IAM policy that grants the required privileges:
 
 ## Development
 
-Requires Python 3.8+ and uv. Useful commands:
+Requires Python and uv. Useful commands:
 
 ```bash
 # Run integration tests (requires admin-level AWS credentials)
